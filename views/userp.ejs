@@ -1,0 +1,178 @@
+<% include partials/header.ejs%>
+<title>Project Based On Pexel...</title>
+</head>
+<body>
+
+        <div style="height: 50px;background-color: black" id="navbar">
+            <div style="position:absolute;top: 5px;left: 10px;width: 300px;" class="ui icon input">
+                <input id="searchip1" data-content="Please Enter Something.." data-variation="inverted" placeholder="Search for free photos..." type="text">
+                <i id="searchbtn1" class="inverted circular search link icon"></i>
+            </div>
+            <a href="/">
+                <img style="width: 120px;margin-top: 10px;margin-left: 45%" src="https://www.pexels.com/assets/pexels-477be655a97f6f1215e2d433bd6d8f3c8dc36373dabe55484cc13a3c1a105974.png" alt="pexel-pic">
+            </a>
+            <div style="float: right;margin-top: 8px">
+                <a href="/upload" style="border-radius: 2px;font-size: 13px;float: left;margin-right: 25px;margin-top: 3px" class="medium ui button green">Contribute Photos</a>
+
+                <div style="margin-top: 10px;font-size: 18px;margin-right: 20px" class="ui inline dropdown">
+
+                    <i style="color: white;" class="fa fa-align-justify" aria-hidden="true"></i>
+                    <br>
+                    <div style="margin-top: 10px" id="menuitems" class="menu">
+                        <%if(user !== undefined){%>
+
+                        <a style="text-transform: capitalize;width: 210px" href="/profile" class="item"><%= user.username%></a>
+
+                        <%}else{%>
+                        <a style="width: 210px;"  href="/login" class="item">
+                            Login
+                        </a>
+                        <a  href="/register" class="item">
+                            SignUp
+                        </a>
+
+                        <%}%>
+
+                        <%if(user !== undefined){%>
+                        <a href="/logout" class="item">
+                            Logout
+                        </a>
+                        <%}%>
+                        <a href="/photo-license" class="item">
+                            License
+                        </a>
+                        <div  style="border-top: 1px solid #888888" class="item icons2">
+                            <a style="margin-right: 10px;font-size: 18px;color: #648484" href="https://www.instagram.com/_raghav__/"><i style="margin-right: 50px" class="fa fa-instagram" aria-hidden="true"></i></a>
+                            <a style="margin-right: 10px;font-size: 18px;color: #648484" href="https://twitter.com/raghavg06"><i style="margin-right: 50px" class="fa fa-twitter" aria-hidden="true"></i></a>
+                            <a style="margin-right: 10px;font-size: 18px;color: #648484" href="https://www.facebook.com/raghav.gupta.16906"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <div style="height: 100%;">
+            <div style="padding-left: 30px;">
+                <div style="margin: 0px;" class="ui grid">
+                    <div style="padding: 0px;" class="twelve wide column">
+                        <img style="width: 95%;height: 100%;" class="ui fluid image" src="./images/uploads/<%= data.filename%>">
+                    </div>
+                    <div style="padding: 0px;border-left: 1px solid #eeeeee;border-bottom: 1px solid #eeeeee" class="four wide column">
+                        <div style="width: 100%;height: 596px;padding: 20px;">
+                            <div style="width: 100%;margin-top: 100px">
+                                <form action="/download" method="post">
+                                    <input style="display: none;" type="text" name="fname" value="<%= data.filename%>">
+                                    <button id="downloadbtn" style="width: 100%;padding: 15px;" class="green ui button"><i class="fa fa-download" aria-hidden="true"></i> &nbsp;&nbsp;Free Download</button>
+                                </form>
+                                <%if(user){%>
+                                  <%if(isliked){%>
+                                <button isliked = "true" fname = "<%= data.filename%>" id="likebtn" style="margin-top: 20px;background-color: #e86355;color: white;" class="ui button"><i class="empty heart icon"></i><span id="text">Liked</span></button>
+                                <%}else{%>
+                                <button fname = "<%= data.filename%>" id="likebtn" style="margin-top: 20px" class="ui button"><i class="empty heart icon"></i><span id="text">Like</span></button>
+                                <%}%>
+                                <%}else{%>
+                                <button data-content="Please Login First" data-variation="inverted" fname = "<%= data.filename%>" id="likebtn2" style="margin-top: 20px" class="ui button"><i class="empty heart icon"></i>Like</button>
+
+                                <%}%>
+                                <!--<button style="margin-top: 20px;margin-left: 120px" class="ui button"><i style="margin: 0px;font-size: 20px;" class="share icon"></i></button>-->
+
+                                <div style="margin-left: 55px" class="ui buttons">
+                                    <div class="ui button">Share</div>
+                                    <div class="ui floating dropdown icon button">
+                                        <i class="share icon"></i>
+                                        <div class="menu">
+                                            <div class="item"><i class="facebook icon"></i> Facebook</div>
+                                            <div class="item"><i class="instagram icon"></i> Instagram</div>
+                                            <div class="item"><i class="twitter icon"></i> Twitter</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="padding-top: 30px;">
+                                    <img style="display: inline" class="ui tiny circular image" src="<%= data.photoloc%>">
+                                    <span style="padding: 20px;"><a style="color: #555;font-size: 16px;text-transform: capitalize" href="/profile/<%= data.user_id%>"><%= data.username%></a>
+                                        <br> <a id="plink" style="color: #000;font-size: 12px;color: #555;" href="/profile/<%= data.user_id%>">View all photos (<%= data.photocount%>)</a>
+                                    </span>
+                                </div>
+
+                                <div style="margin-top: 30px">
+                                    <h4 style="color: #333333">CC0 License</h4>
+                                    <p style="color: #333333;font-size: 13px;"><i class="fa fa-check" aria-hidden="true"></i> Free for personal and commercial use</p>
+                                    <p style="color: #333333;font-size: 13px;"><i class="fa fa-check" aria-hidden="true"></i> No attribution required</p>
+                                </div>
+
+                                <%if(data.insta_u || data.facebook_u || data.google_u){%>
+                                  <div style="margin-top: 30px">
+                                      <h4>Follow Me </h4>
+                                      
+                                      <%if(data.insta_u){%>
+                                      <a style="padding-right: 20px" href="<%= data.insta_u%>"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                                      <%}%>
+                                      <%if(data.facebook_u){%>
+                                      <a style="padding-right: 20px ;" href="<%= data.facebook_u%>"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                      <%}%>
+                                      <%if(data.google_u){%>
+                                      <a href="<%= data.google_u%>"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                                      <%}%>
+                                  </div>
+                                <%}%>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+        <script>
+
+            $('.ui.inline.dropdown').dropdown();
+
+
+            $('.ui.floating.dropdown').dropdown();
+            $('#likebtn2').popup();
+
+            var isliked = $('#likebtn').attr('isliked');
+            $('#likebtn').click(function () {
+
+                var filename = $('#likebtn').attr('fname');
+
+                if(isliked){
+                    $('#likebtn').css('background-color','#E0E1E2');
+                    $('#likebtn').css('color','rgba(0,0,0,.6)');
+                    $('#text').text('Like');
+                    isliked = undefined;
+                }else{
+                    $('#likebtn').css('background-color','#E86355');
+                    $('#likebtn').css('color','white');
+                    $('#text').text('Liked');
+                    isliked = true;
+                }
+
+                $.ajax({
+                    url : '/profile/like',
+                    type : 'POST',
+                    data : {
+                        filename : filename
+                    }
+                });
+            });
+
+            $('#searchbtn1').click(function () {
+                let sq = $('#searchip1').val();
+                if(sq == ''){
+                    $('#searchip1').popup();
+                }else{
+                    window.location = '/search/' + sq;
+                }
+            });
+
+
+        </script>
+
+<% include partials/footer.ejs%>

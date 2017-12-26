@@ -1,0 +1,109 @@
+<% include partials/header.ejs%>
+<title><%= query%> Photos</title>
+</head>
+<body>
+
+<div style="height: 50px;background-color: black;" id="navbar">
+    <div style="position:absolute;top: 5px;left: 10px;width: 300px;" class="ui icon input">
+        <input id="searchip1" data-content="Please Enter Something.." data-variation="inverted" placeholder="Search for free photos..." type="text">
+        <i id="searchbtn1" class="inverted circular search link icon"></i>
+    </div>
+    <a href="/">
+        <img style="width: 120px;margin-top: 10px;margin-left: 45%" src="https://www.pexels.com/assets/pexels-477be655a97f6f1215e2d433bd6d8f3c8dc36373dabe55484cc13a3c1a105974.png" alt="pexel-pic">
+    </a>
+
+    <div style="float: right;margin-top: 8px">
+        <a href="/upload" style="border-radius: 2px;font-size: 13px;float: left;margin-right: 25px;margin-top: 3px" class="medium ui button green">Contribute Photos</a>
+        <!--<div style="float: left" class="ui dropdown">-->
+        <!--<img width="40px" class="ui image circular" src="https://static.pexels.com/users/avatars/230795/raghav-gupta-530-small.png" alt="">-->
+
+        <div style="margin-top: 10px;font-size: 18px;margin-right: 20px" class="ui inline dropdown">
+
+            <i style="color: white;" class="fa fa-align-justify" aria-hidden="true"></i>
+            <br>
+            <div style="margin-top: 10px" id="menuitems" class="menu">
+                <%if(data !== undefined){%>
+
+                <a style="text-transform: capitalize;width: 210px" href="/profile" class="item"><%= data.username%></a>
+
+                <%}else{%>
+                <a style="width: 210px;"  href="/login" class="item">
+                    Login
+                </a>
+                <a  href="/register" class="item">
+                    SignUp
+                </a>
+
+                <%}%>
+
+                <%if(data !== undefined){%>
+                <a href="/logout" class="item">
+                    Logout
+                </a>
+                <%}%>
+
+                <a href="/photo-license" class="item">
+                    License
+                </a>
+                <div  style="border-top: 1px solid #888888" class="item icons2">
+                    <a style="margin-right: 10px;font-size: 18px;color: #648484" href="https://www.instagram.com/_raghav__/"><i style="margin-right: 50px" class="fa fa-instagram" aria-hidden="true"></i></a>
+                    <a style="margin-right: 10px;font-size: 18px;color: #648484" href="https://twitter.com/raghavg06"><i style="margin-right: 50px" class="fa fa-twitter" aria-hidden="true"></i></a>
+                    <a style="margin-right: 10px;font-size: 18px;color: #648484" href="https://www.facebook.com/raghav.gupta.16906"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+<div style="padding: 20px;" id="showcase">
+    <div style="margin-top: 50px">
+        <h4 style="text-transform: capitalize;font-size: 25px;padding-left: 35px"><%= query%> Photos</h4>
+        <%if(results.length > 0){%>
+        <div style="margin-left: 15px;" id="photos" class="ui relaxed grid">
+            <%for(var i = 0 ; i < results.length ; i++){%>
+            <div style="height: 300px;" class="five wide column">
+                <a href="<%= results[i].pageURL%>">
+                    <img class="images" height="266px" width="400px" src="<%= results[i].webformatURL%>"  alt="not available">
+                </a>
+
+            </div>
+            <%}%>
+
+        </div>
+
+        <%}else{%>
+          <p style="padding: 35px;">Sorry, no pictures found!</p>
+        <%}%>
+        </div>
+
+</div>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+<script>
+
+    $('.ui.inline.dropdown').dropdown();
+
+    $('#searchbtn1').click(function () {
+        let sq = $('#searchip1').val();
+        if(sq == ''){
+            $('#searchip1').popup();
+        }else{
+            window.location = '/search/' + sq;
+        }
+    });
+
+</script>
+
+
+
+<% include partials/footer.ejs%>

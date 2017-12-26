@@ -1,0 +1,148 @@
+<% include partials/header.ejs%>
+<title>Pexel Login</title>
+</head>
+<body>
+
+<div style="height: 50px;background-color: transparent;margin-bottom: 40px;background-color: #222222" id="navbar">
+    <div style="position:absolute;top: 5px;left: 10px;width: 300px;" class="ui icon input">
+        <input id="searchip1" data-content="Please Enter Something.." data-variation="inverted" placeholder="Search for free photos..." type="text">
+        <i id="searchbtn1" class="inverted circular search link icon"></i>
+    </div>
+    <a href="/">
+        <img style="width: 120px;margin-top: 10px;margin-left: 45%" src="https://www.pexels.com/assets/pexels-477be655a97f6f1215e2d433bd6d8f3c8dc36373dabe55484cc13a3c1a105974.png" alt="pexel-pic">
+    </a>
+    <div style="float: right;margin-top: 8px">
+        <button style="border-radius: 2px;font-size: 13px;float: left;margin-right: 25px;margin-top: 3px" class="medium ui button green">Contribute Photos</button>
+        <!--<div style="float: left" class="ui dropdown">-->
+        <!--<img width="40px" class="ui image circular" src="https://static.pexels.com/users/avatars/230795/raghav-gupta-530-small.png" alt="">-->
+
+        <div style="margin-top: 10px;font-size: 18px;margin-right: 20px" class="ui inline dropdown">
+            <!--<div style="color: white;" class="text">-->
+            <!--<img style="margin-right: 0px" class="ui avatar image" src="https://static.pexels.com/users/avatars/230795/raghav-gupta-530-small.png">-->
+            <!--Jenny Hess-->
+            <!--</div>-->
+            <i style="color: white;" class="fa fa-align-justify" aria-hidden="true"></i>
+            <div class="menu">
+                <a style="width: 210px;"  href="/login" class="item">
+                    Login
+                </a>
+                <a  href="/register" class="item">
+                    SignUp
+                </a>
+
+                <div  style="border-top: 1px solid #888888" class="item icons2">
+                    <a style="margin-right: 10px;font-size: 18px;color: #648484" href="https://www.instagram.com/_raghav__/"><i style="margin-right: 50px" class="fa fa-instagram" aria-hidden="true"></i></a>
+                    <a style="margin-right: 10px;font-size: 18px;color: #648484" href="https://twitter.com/raghavg06"><i style="margin-right: 50px" class="fa fa-twitter" aria-hidden="true"></i></a>
+                    <a style="margin-right: 10px;font-size: 18px;color: #648484" href="https://www.facebook.com/raghav.gupta.16906"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<div style="min-height: 300px;width: 40%;border: 1px solid #eee;border-radius: 3px;margin-bottom: 50px" class="ui container">
+    <div style="text-align: center;padding: 30px">
+        <a style="font-size: 17px;font-weight: 800;color: #66667a;" href="/login">Login</a> &nbsp;&nbsp;&nbsp;&nbsp;
+        <a style="font-size: 17px;font-weight: 800;color: #4a90e2" href="/register">Sign Up</a>
+    </div>
+
+    <div style="text-align: center">
+        <form action="/auth/facebook">
+            <button style="width: 80%;padding: 15px;background-color: #4a90e2" class="ui facebook button">
+                <i class="facebook icon"></i>
+                SignUp with Facebook
+            </button>
+        </form>
+
+    </div>
+    <div style="text-align: center;margin-top: 30px">
+        <form action="/auth/google" method="get">
+            <button type="submit" style="width: 80%;padding: 15px;" class="ui google plus button">
+                <i class="google plus icon"></i>
+                SignUp with Google Plus
+            </button>
+        </form>
+
+    </div>
+
+    <div style="text-align: center;margin-top: 30px;margin-bottom: 20px">
+        OR
+    </div>
+
+    <% if(message.length > 0){%>
+
+        <div id="err-msg" style="margin-top: 50px;background-color: black;color: white;width: 80%;margin: auto" class="ui segment">
+            <p><%= message%></p>
+        </div>
+
+    <%}%>
+
+    <form action="/register" method="post" style="padding: 50px" class="ui form">
+        <div class="fields">
+            <div style="width: 50%" class="field">
+                <label>First name</label>
+                <input placeholder="first name" type="text" name="first" required>
+            </div>
+            <div style="width: 50%;" class="field">
+                <label>Last name</label>
+                <input placeholder="last name" type="text" name="last" required>
+            </div>
+
+        </div>
+        <div class="field">
+            <label>Email</label>
+            <input name="email" placeholder="Email" type="email" required>
+        </div>
+        <div class="field">
+            <label>Password</label>
+            <input name="password" placeholder="Password" type="password" required>
+        </div>
+
+        <div style="margin-top: 20px;margin-bottom: 30px" class="ui checkbox">
+            <input name="cbox" type="checkbox">
+            <label>Get the best photos in your inbox and receive 40 exclusive photos</label>
+        </div>
+
+        <button style="width: 100%;background-color: #27ae60;color: white;padding: 15px;" class="ui button" type="submit">SignUp</button>
+
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+<script>
+
+    $('.ui.inline.dropdown').dropdown();
+    setTimeout(function () {
+
+        $('#err-msg').fadeOut();
+    },5000);
+
+    $('#searchbtn1').click(function () {
+        let sq = $('#searchip1').val();
+        if(sq == ''){
+            $('#searchip1').popup();
+        }else{
+            window.location = '/search/' + sq;
+        }
+    });
+
+</script>
+
+<% include partials/footer.ejs%>

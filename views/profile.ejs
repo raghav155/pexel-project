@@ -1,0 +1,224 @@
+<% include ./partials/header.ejs%>
+<title><%= data.username%></title>
+</head>
+<body>
+
+
+
+<div style="height: 50px;background-color: transparent;background-color: #222222" id="navbar">
+    <div style="position:absolute;top: 5px;left: 10px;width: 300px;" class="ui icon input">
+        <input id="searchip1" data-content="Please Enter Something.." data-variation="inverted" placeholder="Search for free photos..." type="text">
+        <i id="searchbtn1" class="inverted circular search link icon"></i>
+    </div>
+    <a href="/">
+        <img style="width: 120px;margin-top: 10px;margin-left: 45%" src="https://www.pexels.com/assets/pexels-477be655a97f6f1215e2d433bd6d8f3c8dc36373dabe55484cc13a3c1a105974.png" alt="pexel-pic">
+    </a>
+    <div style="float: right;margin-top: 8px">
+        <a href="/upload" style="border-radius: 2px;font-size: 13px;float: left;margin-right: 25px;margin-top: 3px" class="medium ui button green">Contribute Photos</a>
+        <!--<div style="float: left" class="ui dropdown">-->
+        <!--<img width="40px" class="ui image circular" src="https://static.pexels.com/users/avatars/230795/raghav-gupta-530-small.png" alt="">-->
+
+        <div style="margin-top: 10px;font-size: 18px;margin-right: 20px" class="ui inline dropdown">
+            <!--<div style="color: white;" class="text">-->
+            <!--<img style="margin-right: 0px" class="ui avatar image" src="https://static.pexels.com/users/avatars/230795/raghav-gupta-530-small.png">-->
+            <!--Jenny Hess-->
+            <!--</div>-->
+            <i style="color: white;" class="fa fa-align-justify" aria-hidden="true"></i>
+            <div class="menu">
+                <a style="width: 210px;text-transform: capitalize"  href="/profile" class="item">
+                    <%= data.username%>
+                </a>
+                <a  href="/logout" class="item">
+                    Logout
+                </a>
+                <a href="/photo-license" class="item">
+                    License
+                </a>
+                <div  style="border-top: 1px solid #888888" class="item icons2">
+                    <a style="margin-right: 10px;font-size: 18px;color: #648484" href="https://www.instagram.com/_raghav__/"><i style="margin-right: 50px" class="fa fa-instagram" aria-hidden="true"></i></a>
+                    <a style="margin-right: 10px;font-size: 18px;color: #648484" href="https://twitter.com/raghavg06"><i style="margin-right: 50px" class="fa fa-twitter" aria-hidden="true"></i></a>
+                    <a style="margin-right: 10px;font-size: 18px;color: #648484" href="https://www.facebook.com/raghav.gupta.16906"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<%if(message.length > 0){%>
+<div style="text-align: center;background-color: #4A90E2;color: white;padding: 22px;">
+    <%= message%>
+</div>
+<%}%>
+
+ <div style="padding-left: 100px;padding-right: 100px;border-bottom: 1px solid dimgrey;margin-top: 50px">
+    <div class="ui grid">
+        <div class="three column row">
+            <div style="height: 230px;" class="left floated column">
+                <div style="height: 180px;" class="ui grid">
+                    <div id="preview" class="seven wide column ">
+                        <%if(photoloc != null){%>
+                          <img id="image" style="display: inline;max-height: 140px;min-height: 120px;width: 140px;" class="ui circular image" src="<%= photoloc%>" alt="user-image">
+                        <%}else{%>
+                          <img id="image" style="display: inline;max-heigth: 140px;min-height: 120px;width: 140px;" class="ui circular image" src="https://marketplace.canva.com/MAB8iPsbaFk/1/thumbnail/canva-man-male-head-avatar-person-icon-MAB8iPsbaFk.png" alt="user-image">
+                        <%}%>
+                        <form style="display: none;" action="/profile" method="post" enctype="multipart/form-data">
+                            <input name="myImage" type="file" id="pic-file">
+                            <button type="submit" id="sbtn"></button>
+                        </form>
+                        <a style="color: #333333;" href=""><i class="write icon"></i><span id="cprofile">Change Picture</span></a>
+                    </div>
+                    <div class="nine wide column">
+                        <h3 style="margin-top: 45px;font-size: 22px;text-transform: capitalize;"><%= data.username%></h3>
+                        <p style="font-size: 12px;"><%=data.bio%></p>
+
+
+                          <a style="color: #333333;" href="/user/edit-profile"><i class="write icon"></i><span id="cprofile">Complete your profile</span></a>
+
+
+                    </div>
+                </div>
+                <div style="height: 30px;margin-top: 20px;">
+                    <ul id="lists" style="padding: 10px;border-bottom: 2px solid #4A90E2">
+                        <li style="display: inline;margin-right: 50px;"><a style="color: #4A90E2;" href="">Photos(<%= data.photocount%>)</a></li>
+                        <li style="display: inline;margin-right: 50px;"><a style="color: #000;" href="">Likes(<%= likecount%>)</a></li>
+                        <li style="display: inline;"><a style="color: #000;" href="">Downloads(0)</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="right floated column">
+                <div style="width: 40%;margin-left: 200px;margin-top: 60px">
+                    <%if(data.facebook_u != undefined && data.facebook_u != ''){%>
+                        <a href="<%= data.facebook_u%>" class="ui circular facebook icon button">
+                            <i class="facebook icon"></i>
+                        </a>
+                    <%}%>
+                    <%if(data.insta_u != undefined && data.insta_u != ''){%>
+                    <a href="<%= data.insta_u%>" class="ui circular instagram icon button">
+                        <i class="instagram icon"></i>
+                    </a>
+                    <%}%>
+                    <%if(data.google_u != undefined && data.google_u != ''){%>
+                    <a href="<%= data.google_u%>" class="ui circular google plus icon button">
+                        <i class="google plus icon"></i>
+                    </a>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+
+<div style="padding: 30px;margin-left: 0px;" class="ui relaxed grid">
+    <%for(var i = 0 ; i < photos.length ; i++){%>
+        <div style="height: 300px;" class="five wide column">
+            <div class="images" style="width: 400px;">
+                <img height="266px" width="400px" src="./images/uploads/<%= photos[i].filename%>"  alt="not available">
+                <div class="hoverpart" style="height: 50px;width: 400px;background-color: rgba(0,0,0,.1);position:relative;top: -54px;display: block;">
+                    <div style="padding: 10px;">
+                        <%if(photoloc != null){%>
+                          <img class="ui avatar image" src="<%= photoloc%>">
+                        <%}else{%>
+                          <img class="ui avatar image" src="https://marketplace.canva.com/MAB8iPsbaFk/1/thumbnail/canva-man-male-head-avatar-person-icon-MAB8iPsbaFk.png">
+                        <%}%>
+                          <span style="color: white;text-transform: capitalize"><%= data.username%></span>
+                        <i style="float: right;font-size: 20px;color: white;" class="empty heart icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <%}%>
+
+</div>
+
+
+
+<div style="text-align: center;padding: 20px;margin-top: 50px;font-size: 70px;">
+    <i class="cloud upload icon"></i>
+    <h3 style="margin-top: 0px;">Start Uploading Your Photos to Pexels</h3>
+    <p style="font-size: 13px">Do you have outstanding photos that you want to share with the<br> Pexels community?</p>
+    <a href="/upload" class="blue ui button">Upload your photos</a>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+<script>
+
+    $('.ui.inline.dropdown').dropdown();
+
+    $('#cprofile').click(function (e) {
+        e.preventDefault();
+        $('#pic-file').click();
+    });
+
+    $('.heart').hover(handlerIn,handlerOut);
+
+//    $('.images').hover(function (e) {
+////        var celement = e.target;
+////        console.log($(celement).next().css('display','block'));
+//    })
+    //$('.hoverpart').hover(handlerIn1,handlerOut1);
+
+//    $('.images').hover(handlerIn,handlerOut);
+//
+    function handlerIn(e) {
+      //  console.log(e.target);
+        var celement = e.target;
+        $(celement).css('color','red');
+
+    }
+    function handlerOut(e) {
+       // console.log(e.target);
+        var celement = e.target;
+        $(celement).css('color','white');
+    }
+
+
+
+    var inputElement = document.getElementById("pic-file");
+    //console.log(inputElement)
+    inputElement.addEventListener("change", handleFiles, false);
+    function handleFiles() {
+        //console.log('hiii')
+        var file = this.files[0]; /* now you can work with the file list */
+        console.log(file);
+        // var preview = document.getElementById('preview');
+
+        if (!file.type.startsWith('image/')){ return; }
+
+        var img = document.createElement("img");
+        img.style.display = "inline";
+        img.classList.add("ui");
+        img.classList.add("circular");
+        img.classList.add("image");
+        img.setAttribute('width','150px');
+        img.file = file;
+//        $('#image').remove();
+//        img.setAttribute("id","image");
+//        $('#preview').prepend(img);
+        $('#sbtn').click();
+        //preview.appendChild(img); // Assuming that "preview" is the div output where the content will be displayed.
+
+
+
+        var reader = new FileReader();
+        reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
+        reader.readAsDataURL(file);
+    }
+
+    $('#searchbtn1').click(function () {
+        let sq = $('#searchip1').val();
+        if(sq == ''){
+            $('#searchip1').popup();
+        }else{
+            window.location = '/search/' + sq;
+        }
+    });
+
+</script>
+
+<% include partials/footer.ejs%>

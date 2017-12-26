@@ -1,0 +1,157 @@
+<% include partials/header.ejs%>
+<title>Edit Profile</title>
+</head>
+<body>
+
+<div style="height: 50px;background-color: transparent;margin-bottom: 40px;background-color: #222222" id="navbar">
+    <div style="position:absolute;top: 5px;left: 10px;width: 300px;" class="ui icon input">
+        <input id="searchip1" data-content="Please Enter Something.." data-variation="inverted" placeholder="Search for free photos..." type="text">
+        <i id="searchbtn1" class="inverted circular search link icon"></i>
+    </div>
+    <a href="/">
+        <img style="width: 120px;margin-top: 10px;margin-left: 45%" src="https://www.pexels.com/assets/pexels-477be655a97f6f1215e2d433bd6d8f3c8dc36373dabe55484cc13a3c1a105974.png" alt="pexel-pic">
+    </a>
+    <div style="float: right;margin-top: 8px">
+        <a href="/upload" style="border-radius: 2px;font-size: 13px;float: left;margin-right: 25px;margin-top: 3px" class="medium ui button green">Contribute Photos</a>
+    </div>
+
+</div>
+
+
+<div style="min-height: 300px;width: 40%;border: 1px solid #eee;border-radius: 3px;margin-bottom: 50px" class="ui container">
+
+    <h3 style="text-align: center;padding: 35px;font-size: 30px;">
+        Edit Your Profile
+    </h3>
+
+
+    <form action="/user/edit-profile" method="post"  style="padding: 50px" class="ui form">
+
+        <input style="display: none;" type="file" id="file-input">
+
+        <div class="fields">
+
+            <div style="width: 50%" class="field">
+                <label>First name</label>
+                <input placeholder="first name" type="text" name="first" value="<%= data.username.split(' ')[0]%>" required>
+            </div>
+            <div style="width: 50%;" class="field">
+                <label>Last name</label>
+                <input placeholder="last name" type="text" name="last" value="<%= data.username.split(' ')[1]%>" required>
+            </div>
+
+        </div>
+
+        <%if(data.islocal == 1){%>
+            <div class="field">
+                <label>Email</label>
+                <%if(data.email != null){%>
+                <input name="email" placeholder="Email" type="email" value="<%= data.email%>" required>
+                <%}else{%>
+                <input name="email" placeholder="Email" type="email" required>
+                <%}%>
+            </div>
+        <%}%>
+        <div class="field">
+            <label>Short Bio</label>
+            <%if(data.bio != null || data.bio !== ''){%>
+            <input name="bio"  type="text" value="<%= data.bio%>" placeholder="less than 120 words">
+            <%}else{%>
+            <input name="bio"  type="text">
+            <%}%>
+        </div>
+
+        <%if(data.insta_u != undefined && data.insta_u != ''){%>
+        <div class="field">
+            <label>Instagram Profile</label>
+            <input name="insta_u" type="text" value="<%= data.insta_u%>" >
+        </div>
+        <%}else{%>
+        <div class="field">
+            <label>Instagram Profile</label>
+            <input name="insta_u" type="text" >
+        </div>
+        <%}%>
+
+        <%if(data.facebook_u != undefined && data.facebook_u != ''){%>
+        <div class="field">
+            <label>Facebook Profile</label>
+            <input name="facebook_u" type="text" value="<%= data.facebook_u%>" >
+        </div>
+        <%}else{%>
+        <div class="field">
+            <label>Facebook Profile</label>
+            <input name="facebook_u" type="text" >
+        </div>
+        <%}%>
+
+        <%if(data.google_u != undefined && data.google_u != ''){%>
+        <div class="field">
+            <label>Google Plus Profile</label>
+            <input name="google_u" type="text" value="<%= data.google_u%>" >
+        </div>
+        <%}else{%>
+        <div class="field">
+            <label>Google Plus Profile</label>
+            <input name="google_u" type="text" >
+        </div>
+        <%}%>
+
+        <div style="margin-top: 20px;margin-bottom: 30px" class="ui  checkbox">
+            <%if(data.offers == 1){%>
+              <input name="cbox" type="checkbox" checked>
+            <%}else{%>
+              <input name="cbox" type="checkbox">
+            <%}%>
+            <label>Get the best photos in your inbox and receive 40 exclusive photos</label>
+        </div>
+
+        <div class="field">
+            <label>Password</label>
+            <a style="color: #000;text-decoration: underline" href="/"><i class="undo icon"></i> Change Password </a>
+        </div>
+
+        <button type="submit"  class=" large blue ui right floated button">Update</button>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+<script>
+
+    $('.ui.inline.dropdown').dropdown();
+
+    setTimeout(function () {
+
+        $('#err-msg').fadeOut();
+    },5000);
+    
+    $('#file-input-btn').click(function (e) {
+        e.preventDefault();
+        $('#file-input').click();
+    });
+
+    $('#searchbtn1').click(function () {
+        let sq = $('#searchip1').val();
+        if(sq == ''){
+            $('#searchip1').popup();
+        }else{
+            window.location = '/search/' + sq;
+        }
+    });
+
+</script>
+
+<% include partials/footer.ejs%>

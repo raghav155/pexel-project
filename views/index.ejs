@@ -1,0 +1,166 @@
+<% include partials/header.ejs%>
+<title>Project Based On Pexel...</title>
+</head>
+<body>
+<div id="ext_box">
+    <div style="height: 360px;" id="jumbotron">
+
+        <div style="height: 50px;background-color: transparent;margin-bottom: 40px;" id="navbar">
+            <div style="float: right;margin-top: 8px">
+                <a href="/upload" style="border-radius: 2px;font-size: 13px;float: left;margin-right: 25px;margin-top: 3px" class="medium ui button green">Contribute Photos</a>
+                <!--<div style="float: left" class="ui dropdown">-->
+                    <!--<img width="40px" class="ui image circular" src="https://static.pexels.com/users/avatars/230795/raghav-gupta-530-small.png" alt="">-->
+
+                    <div style="margin-top: 10px;font-size: 18px;margin-right: 20px" class="ui inline dropdown">
+
+                        <i style="color: white;" class="fa fa-align-justify" aria-hidden="true"></i>
+                        <br>
+                        <div style="margin-top: 10px" id="menuitems" class="menu">
+                            <%if(data !== undefined){%>
+
+                                <a style="text-transform: capitalize;width: 210px" href="/profile" class="item"><%= data.username%></a>
+
+                            <%}else{%>
+                            <a style="width: 210px;"  href="/login" class="item">
+                              Login
+                            </a>
+                            <a  href="/register" class="item">
+                              SignUp
+                            </a>
+
+                            <%}%>
+
+                            <%if(data !== undefined){%>
+                            <a href="/logout" class="item">
+                               Logout
+                            </a>
+                            <%}%>
+
+                            <a href="/photo-license" class="item">
+                                License
+                            </a>
+                            <div  style="border-top: 1px solid #888888" class="item icons2">
+                                <a style="margin-right: 10px;font-size: 18px;color: #648484" href="https://www.instagram.com/_raghav__/"><i style="margin-right: 50px" class="fa fa-instagram" aria-hidden="true"></i></a>
+                                <a style="margin-right: 10px;font-size: 18px;color: #648484" href="https://twitter.com/raghavg06"><i style="margin-right: 50px" class="fa fa-twitter" aria-hidden="true"></i></a>
+                                <a style="margin-right: 10px;font-size: 18px;color: #648484" href="https://www.facebook.com/raghav.gupta.16906"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+
+            </div>
+
+        </div>
+
+        <div style="text-align: center" class="ui container">
+            <img src="https://www.pexels.com/assets/pexels-477be655a97f6f1215e2d433bd6d8f3c8dc36373dabe55484cc13a3c1a105974.png" alt="pexel-pic">
+            <h3 style="color: white;margin-top: 10px;font-weight: 500;">Best free stock photos in one place.</h3>
+            <div style="width: 50%;margin: auto;margin-top: 20px" class="ui fluid action input">
+                <input id="searchip" data-content="Please Enter Something.." data-variation="inverted" placeholder="Search for free photos..." type="text">
+                <div id="searchbtn" class="ui button">Search</div>
+            </div>
+        </div>
+
+        <div style="height: 30px;margin-top: 100px">
+            <span class="icons" style="float: right;">
+                <a style="margin-right: 10px;font-size: 18px;color: #648484" href="https://www.instagram.com/_raghav__/"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                <a style="margin-right: 10px;font-size: 18px;color: #648484" href="https://twitter.com/raghavg06"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                <a style="margin-right: 10px;font-size: 18px;color: #648484" href="https://www.facebook.com/raghav.gupta.16906"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            </span>
+        </div>
+    </div>
+
+    <div style="padding: 20px;margin-top: 30px">
+        <h3 style="font-weight: 700;width: 30%;margin-left: 35px">Free Stock Photos &nbsp;&nbsp;&nbsp;&nbsp;<a id="trending" style="color: black;font-weight: 200;font-size: 12px;" href="/">Trending | </a><a id="new" style="color: #888888;font-weight: 200;font-size: 12px;" href="/new-photos">New</a></h3>
+
+
+        <%if(results != undefined){%>
+            <div style="margin-left: 15px;" class="ui relaxed grid">
+                <%for(var i = results.length - 1 ; i >= 0 ; i--){%>
+                <div style="height: 300px;" class="five wide column">
+
+                    <a href="/profile/<%= results[i].filename.split('.')[1]%>/<%=results[i].filename.split('.')[0]%>" >
+                        <img class="images" height="266px" width="400px" src="./images/uploads/<%= results[i].filename%>"  alt="not available">
+                    </a>
+                        <div class="hoverpart" style="height: 50px;width: 400px;background-color: rgba(0,0,0,.1);position:relative;top: -54px;display: block;">
+                            <div style="padding: 10px;">
+                                <%if(results[i].photoloc != null){%>
+                                <img class="ui avatar image" src="<%= results[i].photoloc%>">
+                                <%}else{%>
+                                <img class="ui avatar image" src="https://marketplace.canva.com/MAB8iPsbaFk/1/thumbnail/canva-man-male-head-avatar-person-icon-MAB8iPsbaFk.png">
+                                <%}%>
+                                <span class="uname" style="color: #eeeeee;text-transform: capitalize"><%= results[i].username%></span>
+                                <i style="float: right;font-size: 20px;color: white;" class="heart fa fa-heart"></i>
+
+                            </div>
+                        </div>
+
+                </div>
+                <%}%>
+
+            </div>
+        <%}%>
+    </div>
+</div>
+
+
+<!--<script src="./js/jquery.js"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+<script>
+
+       $('.ui.inline.dropdown').dropdown();
+       $('#new').click(function () {
+           $('#trending').css('color','#888888');
+           $('#new').css('color','black');
+       });
+
+       $('.heart').hover(handlerIn,handlerOut);
+       $('.heart').click(function (e) {
+           e.target.parentElement.parentElement.previousElementSibling.click();
+       })
+
+       function handlerIn(e) {
+           //  console.log(e.target);
+           var celement = e.target;
+           $(celement).css('color','#e86355');
+           $(celement).css('cursor','pointer');
+
+       }
+       function handlerOut(e) {
+           // console.log(e.target);
+           var celement = e.target;
+           $(celement).css('color','white');
+       }
+
+       $('.uname').hover(handlerIn1,handlerOut1);
+
+       function handlerIn1(e) {
+           //  console.log(e.target);
+           var celement = e.target;
+           $(celement).css('color','white');
+           $(celement).css('cursor','pointer');
+
+       }
+       function handlerOut1(e) {
+           // console.log(e.target);
+           var celement = e.target;
+           $(celement).css('color','#eee');
+       }
+
+       $('#searchbtn').click(function () {
+           let sq = $('#searchip').val();
+           if(sq == ''){
+               $('#searchip').popup();
+           }else{
+               window.location = '/search/' + sq;
+           }
+       });
+
+
+
+</script>
+
+
+
+<% include partials/footer.ejs%>
